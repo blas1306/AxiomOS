@@ -1,0 +1,29 @@
+#!/bin/bash
+
+AXIOM_HOME="$HOME/proyectos/AxiomOS"
+
+COMMAND="$1"
+shift || true
+
+case "$COMMAND" in
+    new)
+        "$AXIOM_HOME/scripts/create_project.sh" "$@"
+        ;;
+
+    help|"")
+        echo "AxiomOS CLI"
+        echo
+        echo "Usage:"
+        echo "  axiom new <type> <name>"
+        echo
+        echo "Examples:"
+        echo "  axiom new latex InformeFisica"
+        echo "  axiom new python MinimosCuadrados"
+        ;;
+
+    *)
+        echo "Unknown command: $COMMAND"
+        echo "Run: axiom help"
+        exit 1
+        ;;
+esac
