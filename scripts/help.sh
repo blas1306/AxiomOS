@@ -5,6 +5,24 @@ AXIOM_HOME="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 source "$AXIOM_HOME/scripts/lib/ui.sh"
 
+if [ "$1" = "new" ]; then
+    info "axiom new"
+    echo
+    echo "Usage:"
+    echo "  axiom new <type> <name> [options]"
+    echo
+    echo "Project types:"
+    echo "  latex"
+    echo "  python"
+    echo "  julia"
+    echo "  physics_report"
+    echo
+    echo "Examples:"
+    echo "  axiom new python MyProject --install"
+    echo "  axiom new physics_report Electrostatica"
+    exit 0
+fi
+
 info "AxiomOS CLI"
 echo
 

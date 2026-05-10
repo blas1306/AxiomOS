@@ -44,7 +44,7 @@ case "$COMMAND" in
         ;;
 
     help|"")
-        "$AXIOM_HOME/scripts/help.sh"
+        "$AXIOM_HOME/scripts/help.sh" "$@"
         ;;
 
     version)
