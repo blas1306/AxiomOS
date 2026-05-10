@@ -1,13 +1,11 @@
 #!/bin/bash
 
-PROJECT_FILE=".axiom/project.conf"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+AXIOM_HOME="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-if [ ! -f "$PROJECT_FILE" ]; then
-    echo "Not inside an AxiomOS project."
-    exit 1
-fi
+source "$AXIOM_HOME/scripts/lib/project.sh"
 
-source "$PROJECT_FILE"
+load_project
 
 echo "AxiomOS Project"
 echo
