@@ -6,8 +6,13 @@ COMMAND="$1"
 shift || true
 
 case "$COMMAND" in
+
     new)
         "$AXIOM_HOME/scripts/create_project.sh" "$@"
+        ;;
+
+    doctor)
+        "$AXIOM_HOME/scripts/doctor.sh"
         ;;
 
     help|"")
@@ -15,6 +20,7 @@ case "$COMMAND" in
         echo
         echo "Usage:"
         echo "  axiom new <type> <name>"
+        echo "  axiom doctor"
         echo
         echo "Examples:"
         echo "  axiom new latex InformeFisica"
@@ -26,4 +32,5 @@ case "$COMMAND" in
         echo "Run: axiom help"
         exit 1
         ;;
+
 esac
