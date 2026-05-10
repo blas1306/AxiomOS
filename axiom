@@ -44,15 +44,11 @@ case "$COMMAND" in
         ;;
 
     help|"")
-        echo "AxiomOS CLI"
-        echo
-        echo "Usage:"
-        echo "  axiom new <type> <name>"
-        echo "  axiom doctor"
-        echo "  axiom info"
-        echo "Examples:"
-        echo "  axiom new latex InformeFisica"
-        echo "  axiom new python MinimosCuadrados"
+        "$AXIOM_HOME/scripts/help.sh"
+        ;;
+
+    version)
+        "$AXIOM_HOME/scripts/version.sh"
         ;;
 
     *)

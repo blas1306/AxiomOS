@@ -1,9 +1,23 @@
 #!/bin/bash
 
+LOG_DIR=".axiom/logs"
+mkdir -p "$LOG_DIR"
+
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+LOG_FILE="$LOG_DIR/pipeline_$TIMESTAMP.log"
+
+cd "$LOG_DIR"
+ln -sf "$(basename "$LOG_FILE")" latest.log
+cd - > /dev/null
+
+exec > >(tee "$LOG_FILE") 2>&1
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 AXIOM_HOME="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 source "$AXIOM_HOME/scripts/lib/project.sh"
+source "$AXIOM_HOME/scripts/lib/ui.sh"
+source "$AXIOM_HOME/scripts/lib/pipeline.sh"
 
 load_project
 
@@ -11,42 +25,39 @@ case "$TYPE" in
 
     python)
         if [ ! -d ".venv" ]; then
-            echo "Virtual environment not found."
+            error "Virtual environment not found. Run: axiom install"
             exit 1
         fi
 
-        source .venv/bin/activate
-        python main.py
+        info "Running Python project..."
+        .venv/bin/python main.py
         ;;
 
     latex)
+        info "Running LaTeX project..."
         pdflatex main.tex
         ;;
 
     julia)
+        info "Running Julia project..."
         julia main.jl
         ;;
 
     physics_report)
-        if [ ! -f ".axiom/pipeline.conf" ]; then
-            echo "Pipeline config not found: .axiom/pipeline.conf"
-            exit 1
-        fi
-
-        source ".axiom/pipeline.conf"
+        load_pipeline
 
         if [ ! -d ".venv" ]; then
-            echo "Virtual environment not found. Run: axiom install"
+            error "Virtual environment not found. Run: axiom install"
             exit 1
         fi
 
         if [ -n "$RUN_PYTHON" ]; then
-            echo "Running Python step: $RUN_PYTHON"
+            info "Running Python step: $RUN_PYTHON"
             .venv/bin/python "$RUN_PYTHON"
         fi
 
         if [ -n "$BUILD_LATEX" ]; then
-            echo "Building LaTeX step: $BUILD_LATEX"
+            info "Building LaTeX step: $BUILD_LATEX"
 
             LATEX_DIR="$(dirname "$BUILD_LATEX")"
             LATEX_FILE="$(basename "$BUILD_LATEX")"
@@ -55,10 +66,12 @@ case "$TYPE" in
             pdflatex "$LATEX_FILE"
             cd - > /dev/null
         fi
+
+        success "Pipeline finished."
         ;;
 
     *)
-        echo "Unknown project type: $TYPE"
+        error "Unknown project type: $TYPE"
         exit 1
         ;;
 
