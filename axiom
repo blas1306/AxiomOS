@@ -50,6 +50,10 @@ case "$COMMAND" in
     init)
         "$AXIOM_HOME/scripts/init.sh" "$@"
         ;;
+    
+    upgrade)
+        "$AXIOM_HOME/scripts/upgrade.sh"
+        ;;
 
     version)
         "$AXIOM_HOME/scripts/version.sh"
