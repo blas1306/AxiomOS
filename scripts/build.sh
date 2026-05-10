@@ -28,6 +28,18 @@ case "$TYPE" in
         echo "Julia projects do not need build step yet."
         ;;
 
+    physics_report)
+        if [ ! -f "report/main.tex" ]; then
+            echo "report/main.tex not found."
+            exit 1
+        fi
+
+        echo "Building physics report..."
+
+        cd report
+        pdflatex main.tex
+        ;;
+
     *)
         echo "Unknown project type: $TYPE"
         exit 1
