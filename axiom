@@ -39,6 +39,10 @@ case "$COMMAND" in
         "$AXIOM_HOME/scripts/open.sh"
         ;;
 
+    status)
+        "$AXIOM_HOME/scripts/status.sh"
+        ;;
+
     help|"")
         echo "AxiomOS CLI"
         echo
