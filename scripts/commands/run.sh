@@ -13,7 +13,7 @@ cd - > /dev/null
 exec > >(tee "$LOG_FILE") 2>&1
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-AXIOM_HOME="$(cd "$SCRIPT_DIR/.." && pwd)"
+AXIOM_HOME="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 source "$AXIOM_HOME/scripts/lib/project.sh"
 source "$AXIOM_HOME/scripts/lib/ui.sh"
@@ -53,7 +53,12 @@ case "$TYPE" in
 
         if [ -n "$RUN_PYTHON" ]; then
             info "Running Python step: $RUN_PYTHON"
-            .venv/bin/python "$RUN_PYTHON"
+            if .venv/bin/python "$RUN_PYTHON"; then
+                success "Python step finished."
+            else
+                error "Python step failed."
+                exit 1
+            fi
         fi
 
         if [ -n "$BUILD_LATEX" ]; then

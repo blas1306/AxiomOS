@@ -5,64 +5,16 @@ AXIOM_HOME="$HOME/proyectos/AxiomOS"
 COMMAND="$1"
 shift || true
 
-case "$COMMAND" in
+if [ -z "$COMMAND" ]; then
+    COMMAND="help"
+fi
 
-    new)
-        "$AXIOM_HOME/scripts/create_project.sh" "$@"
-        ;;
+COMMAND_SCRIPT="$AXIOM_HOME/scripts/commands/$COMMAND.sh"
 
-    doctor)
-        "$AXIOM_HOME/scripts/doctor.sh"
-        ;;
+if [ ! -f "$COMMAND_SCRIPT" ]; then
+    echo "Unknown command: $COMMAND"
+    echo "Run: axiom help"
+    exit 1
+fi
 
-    info)
-        "$AXIOM_HOME/scripts/info.sh"
-        ;;
-
-    run)
-        "$AXIOM_HOME/scripts/run.sh"
-        ;;
-
-    install)
-        "$AXIOM_HOME/scripts/install_project.sh"
-        ;;
-
-    build)
-        "$AXIOM_HOME/scripts/build.sh"
-        ;;
-
-    clean)
-        "$AXIOM_HOME/scripts/clean.sh"
-        ;;
-
-    open)
-        "$AXIOM_HOME/scripts/open.sh"
-        ;;
-
-    status)
-        "$AXIOM_HOME/scripts/status.sh"
-        ;;
-
-    help|"")
-        "$AXIOM_HOME/scripts/help.sh" "$@"
-        ;;
-
-    init)
-        "$AXIOM_HOME/scripts/init.sh" "$@"
-        ;;
-    
-    upgrade)
-        "$AXIOM_HOME/scripts/upgrade.sh"
-        ;;
-
-    version)
-        "$AXIOM_HOME/scripts/version.sh"
-        ;;
-
-    *)
-        echo "Unknown command: $COMMAND"
-        echo "Run: axiom help"
-        exit 1
-        ;;
-
-esac
+"$COMMAND_SCRIPT" "$@"
