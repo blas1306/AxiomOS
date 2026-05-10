@@ -27,6 +27,10 @@ case "$COMMAND" in
         "$AXIOM_HOME/scripts/install_project.sh"
         ;;
 
+    build)
+        "$AXIOM_HOME/scripts/build.sh"
+        ;;
+
     help|"")
         echo "AxiomOS CLI"
         echo
