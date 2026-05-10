@@ -47,6 +47,10 @@ case "$COMMAND" in
         "$AXIOM_HOME/scripts/help.sh" "$@"
         ;;
 
+    init)
+        "$AXIOM_HOME/scripts/init.sh" "$@"
+        ;;
+
     version)
         "$AXIOM_HOME/scripts/version.sh"
         ;;
