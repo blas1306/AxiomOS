@@ -30,7 +30,7 @@ check_python_package() {
     fi
 }
 
-info "AxiomOS Doctor"
+title "AxiomOS Doctor"
 echo
 
 check_command python3 --version
