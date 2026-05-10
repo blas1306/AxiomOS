@@ -62,8 +62,17 @@ case "$TYPE" in
             LATEX_DIR="$(dirname "$BUILD_LATEX")"
             LATEX_FILE="$(basename "$BUILD_LATEX")"
 
+            LATEX_LOG="../.axiom/logs/latex.log"
+
             cd "$LATEX_DIR"
-            pdflatex "$LATEX_FILE"
+
+            if pdflatex "$LATEX_FILE" > /dev/null 2>&1; then
+                success "PDF generated."
+            else
+                error "LaTeX build failed. Check .axiom/logs/latest.log"
+                exit 1
+            fi
+
             cd - > /dev/null
         fi
 

@@ -7,17 +7,17 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 info() {
-    echo -e "${BLUE}$1${NC}"
+    echo -e "${BLUE}[INFO]${NC} $1"
 }
 
 success() {
-    echo -e "${GREEN}$1${NC}"
+    echo -e "${GREEN}[OK]${NC} $1"
 }
 
 warning() {
-    echo -e "${YELLOW}$1${NC}"
+    echo -e "${YELLOW}[WARN]${NC} $1"
 }
 
 error() {
-    echo -e "${RED}$1${NC}"
+    echo -e "${RED}[ERROR]${NC} $1"
 }
