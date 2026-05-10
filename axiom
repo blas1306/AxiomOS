@@ -19,13 +19,21 @@ case "$COMMAND" in
         "$AXIOM_HOME/scripts/info.sh"
         ;;
 
+    run)
+        "$AXIOM_HOME/scripts/run.sh"
+        ;;
+
+    install)
+        "$AXIOM_HOME/scripts/install_project.sh"
+        ;;
+
     help|"")
         echo "AxiomOS CLI"
         echo
         echo "Usage:"
         echo "  axiom new <type> <name>"
         echo "  axiom doctor"
-        echo
+        echo "  axiom info"
         echo "Examples:"
         echo "  axiom new latex InformeFisica"
         echo "  axiom new python MinimosCuadrados"
