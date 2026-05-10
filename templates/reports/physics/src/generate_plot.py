@@ -7,4 +7,4 @@ y = np.sin(x)
 plt.plot(x, y)
 plt.grid(True)
 
-plt.savefig("../figures/sine_wave.png")
+plt.savefig("figures/sine_wave.png")

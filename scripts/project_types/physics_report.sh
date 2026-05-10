@@ -20,6 +20,11 @@ TYPE=physics_report
 NAME=$NAME
 EOF
 
+cat > "$DEST/.axiom/pipeline.conf" <<EOF
+RUN_PYTHON=src/generate_plot.py
+BUILD_LATEX=report/main.tex
+EOF
+
 python3 -m venv "$DEST/.venv"
 
 cat > "$DEST/requirements.txt" <<EOF
