@@ -9,8 +9,9 @@ source "$AXIOM_HOME/scripts/lib/cli.sh"
 require_project
 
 title "AxiomOS Project"
+divider
 
-echo "Name:     $NAME"
-echo "Type:     $TYPE"
-echo "Location: $(pwd)"
-echo "Config:   .axiom/project.conf"
+kv "Name" "$NAME"
+kv "Type" "$TYPE"
+kv "Location" "$(pwd)"
+kv "Config" ".axiom/project.conf"

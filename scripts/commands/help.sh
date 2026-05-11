@@ -60,26 +60,32 @@ if [ "$1" = "status" ]; then
     exit 0
 fi
 
-info "AxiomOS CLI"
-echo
+title "AxiomOS CLI"
 
-echo "Project commands:"
-echo "  axiom new <type> <name>"
-echo "  axiom run"
-echo "  axiom build"
-echo "  axiom clean"
-echo "  axiom install"
-echo "  axiom status"
-echo "  axiom info"
-echo
+section "Project commands"
+printf "  %-28s %s\n" "axiom new <type> <name>" "Create a project"
+printf "  %-28s %s\n" "axiom run" "Run current project"
+printf "  %-28s %s\n" "axiom build" "Build current project"
+printf "  %-28s %s\n" "axiom clean" "Clean generated files"
+printf "  %-28s %s\n" "axiom install" "Install project dependencies"
+printf "  %-28s %s\n" "axiom status" "Show project status"
+printf "  %-28s %s\n" "axiom info" "Show project metadata"
+printf "  %-28s %s\n" "axiom logs" "Open project logs"
 
-echo "Utility commands:"
-echo "  axiom doctor"
-echo "  axiom help"
-echo "  axiom version"
-echo
+section "Aliases"
+printf "  %-12s -> %s\n" "axiom r" "run"
+printf "  %-12s -> %s\n" "axiom bd" "build"
+printf "  %-12s -> %s\n" "axiom st" "status"
+printf "  %-12s -> %s\n" "axiom lg" "logs"
+printf "  %-12s -> %s\n" "axiom dr" "doctor"
 
-echo "Examples:"
+section "Utility commands"
+printf "  %-28s %s\n" "axiom doctor" "Check system/project environment"
+printf "  %-28s %s\n" "axiom help" "Show help"
+printf "  %-28s %s\n" "axiom version" "Show CLI version"
+
+section "Examples"
 echo "  axiom new python MyProject"
 echo "  axiom new physics_report Electrostatica"
 echo "  axiom run"
+echo "  axiom logs --latest"
