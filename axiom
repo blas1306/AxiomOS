@@ -12,8 +12,23 @@ fi
 COMMAND_SCRIPT="$AXIOM_HOME/scripts/commands/$COMMAND.sh"
 
 if [ ! -f "$COMMAND_SCRIPT" ]; then
+
     echo "Unknown command: $COMMAND"
+    echo
+
+    MATCHES=$(find "$AXIOM_HOME/scripts/commands" -type f -name "*.sh" \
+        | xargs -n 1 basename \
+        | sed 's/\.sh$//' \
+        | grep "^$COMMAND")
+
+    if [ -n "$MATCHES" ]; then
+        echo "Did you mean:"
+        echo "$MATCHES" | sed 's/^/  /'
+    fi
+
+    echo
     echo "Run: axiom help"
+
     exit 1
 fi
 
