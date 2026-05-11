@@ -23,6 +23,43 @@ if [ "$1" = "new" ]; then
     exit 0
 fi
 
+if [ "$1" = "logs" ]; then
+    info "axiom logs"
+    echo
+    echo "Usage:"
+    echo "  axiom logs [option]"
+    echo
+    echo "Options:"
+    echo "  --latest   Open latest log"
+    echo "  --list     List logs"
+    echo "  --tail     Show last 50 lines"
+    echo "  --follow   Follow latest log"
+    exit 0
+fi
+
+if [ "$1" = "run" ]; then
+    info "axiom run"
+    echo
+    echo "Usage:"
+    echo "  axiom run"
+    echo
+    echo "Runs the current AxiomOS project."
+    echo
+    echo "For physics_report projects, it runs the configured pipeline:"
+    echo "  Python step -> LaTeX build -> PDF output"
+    exit 0
+fi
+
+if [ "$1" = "status" ]; then
+    info "axiom status"
+    echo
+    echo "Usage:"
+    echo "  axiom status"
+    echo
+    echo "Shows operational status for the current project."
+    exit 0
+fi
+
 info "AxiomOS CLI"
 echo
 

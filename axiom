@@ -9,6 +9,30 @@ if [ -z "$COMMAND" ]; then
     COMMAND="help"
 fi
 
+case "$COMMAND" in
+
+    r)
+        COMMAND="run"
+        ;;
+
+    bd)
+        COMMAND="build"
+        ;;
+
+    st)
+        COMMAND="status"
+        ;;
+
+    lg)
+        COMMAND="logs"
+        ;;
+
+    dr)
+        COMMAND="doctor"
+        ;;
+
+esac
+
 COMMAND_SCRIPT="$AXIOM_HOME/scripts/commands/$COMMAND.sh"
 
 if [ ! -f "$COMMAND_SCRIPT" ]; then
