@@ -10,8 +10,6 @@ cd "$LOG_DIR"
 ln -sf "$(basename "$LOG_FILE")" latest.log
 cd - > /dev/null
 
-exec > >(tee "$LOG_FILE") 2>&1
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 AXIOM_HOME="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
@@ -30,17 +28,38 @@ case "$TYPE" in
         fi
 
         info "Running Python project..."
-        .venv/bin/python main.py
+
+        if .venv/bin/python main.py > "$LOG_FILE" 2>&1; then
+            success "Python project finished."
+            exit 0
+        else
+            error "Python project failed. Check .axiom/logs/latest.log"
+            exit 1
+        fi
         ;;
 
     latex)
         info "Running LaTeX project..."
-        pdflatex main.tex
+
+        if pdflatex main.tex > "$LOG_FILE" 2>&1; then
+            success "PDF generated."
+            exit 0
+        else
+            error "LaTeX build failed. Check .axiom/logs/latest.log"
+            exit 1
+        fi
         ;;
 
     julia)
         info "Running Julia project..."
-        julia main.jl
+
+        if julia main.jl > "$LOG_FILE" 2>&1; then
+            success "Julia project finished."
+            exit 0
+        else
+            error "Julia project failed. Check .axiom/logs/latest.log"
+            exit 1
+        fi
         ;;
 
     physics_report)
@@ -53,10 +72,11 @@ case "$TYPE" in
 
         if [ -n "$RUN_PYTHON" ]; then
             info "Running Python step: $RUN_PYTHON"
-            if .venv/bin/python "$RUN_PYTHON"; then
+
+            if .venv/bin/python "$RUN_PYTHON" > "$LOG_FILE" 2>&1; then
                 success "Python step finished."
             else
-                error "Python step failed."
+                error "Python step failed. Check .axiom/logs/latest.log"
                 exit 1
             fi
         fi
@@ -67,11 +87,9 @@ case "$TYPE" in
             LATEX_DIR="$(dirname "$BUILD_LATEX")"
             LATEX_FILE="$(basename "$BUILD_LATEX")"
 
-            LATEX_LOG="../.axiom/logs/latex.log"
-
             cd "$LATEX_DIR"
 
-            if pdflatex "$LATEX_FILE" > /dev/null 2>&1; then
+            if pdflatex "$LATEX_FILE" >> "../$LOG_FILE" 2>&1; then
                 success "PDF generated."
             else
                 error "LaTeX build failed. Check .axiom/logs/latest.log"
@@ -82,6 +100,7 @@ case "$TYPE" in
         fi
 
         success "Pipeline finished."
+        exit 0
         ;;
 
     *)
