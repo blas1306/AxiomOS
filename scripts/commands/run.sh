@@ -16,16 +16,14 @@ AXIOM_HOME="$(cd "$SCRIPT_DIR/../.." && pwd)"
 source "$AXIOM_HOME/scripts/lib/project.sh"
 source "$AXIOM_HOME/scripts/lib/ui.sh"
 source "$AXIOM_HOME/scripts/lib/pipeline.sh"
+source "$AXIOM_HOME/scripts/lib/cli.sh"
 
-load_project
+require_project
 
 case "$TYPE" in
 
     python)
-        if [ ! -d ".venv" ]; then
-            error "Virtual environment not found. Run: axiom install"
-            exit 1
-        fi
+        require_venv
 
         info "Running Python project..."
 
@@ -65,10 +63,7 @@ case "$TYPE" in
     physics_report)
         load_pipeline
 
-        if [ ! -d ".venv" ]; then
-            error "Virtual environment not found. Run: axiom install"
-            exit 1
-        fi
+        require_venv
 
         if [ -n "$RUN_PYTHON" ]; then
             info "Running Python step: $RUN_PYTHON"
