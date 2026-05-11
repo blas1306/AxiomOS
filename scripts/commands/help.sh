@@ -19,6 +19,7 @@ if [ "$1" = "new" ]; then
     echo
     echo "Examples:"
     echo "  axiom new python MyProject --install"
+    echo "  axiom new --list"
     echo "  axiom new physics_report Electrostatica"
     exit 0
 fi
