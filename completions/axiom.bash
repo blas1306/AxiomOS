@@ -7,7 +7,7 @@ _axiom_completions()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-    COMMANDS="new run build clean install status info doctor help version open upgrade init logs preview"
+    COMMANDS="new run build clean install status info doctor help version open upgrade init logs preview dev"
     PROJECT_TYPES="latex python julia physics_report"
     LOG_OPTIONS="--latest --list --tail --follow"
     OPEN_TARGETS="code pdf logs"
