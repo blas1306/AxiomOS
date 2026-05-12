@@ -7,9 +7,15 @@ _axiom_completions()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-    COMMANDS="new run build clean install status info doctor help version open upgrade init logs"
+    COMMANDS="new run build clean install status info doctor help version open upgrade init logs preview"
     PROJECT_TYPES="latex python julia physics_report"
     LOG_OPTIONS="--latest --list --tail --follow"
+    OPEN_TARGETS="code pdf logs"
+
+    if [[ "$prev" == "open" ]]; then
+        COMPREPLY=( $(compgen -W "$OPEN_TARGETS" -- "$cur") )
+        return
+    fi
 
     if [[ $COMP_CWORD -eq 1 ]]; then
         COMPREPLY=( $(compgen -W "$COMMANDS" -- "$cur") )
