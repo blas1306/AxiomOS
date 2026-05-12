@@ -38,6 +38,9 @@ class AxiomDevHandler(FileSystemEventHandler):
             ".png",
             ".jpg",
             ".jpeg",
+            ".swp",
+            ".swx",
+            "~"
         }
 
         return any(str(p).endswith(suffix) for suffix in ignored_suffixes)
@@ -61,7 +64,7 @@ class AxiomDevHandler(FileSystemEventHandler):
         print("[INFO] Running preview...")
 
         subprocess.run(
-            [str(Path.home() / ".local/bin/axiom"), "preview"],
+            [str(Path.home() / ".local/bin/axiom"), "preview", "--no-open"],
             cwd=Path.cwd(),
         )
 
