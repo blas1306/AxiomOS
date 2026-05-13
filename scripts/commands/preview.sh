@@ -8,6 +8,12 @@ source "$AXIOM_HOME/scripts/lib/cli.sh"
 
 require_project
 
+NO_OPEN=false
+
+if [ "$1" = "--no-open" ]; then
+    NO_OPEN=true
+fi
+
 info "Running project..."
 
 if "$AXIOM_HOME/scripts/commands/run.sh"; then
@@ -37,6 +43,11 @@ esac
 if [ ! -f "$PDF_FILE" ]; then
     error "PDF not found."
     exit 1
+fi
+
+if [ "$NO_OPEN" = true ]; then
+    success "Preview built."
+    exit 0
 fi
 
 info "Opening PDF..."
