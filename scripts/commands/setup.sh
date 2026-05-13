@@ -15,6 +15,7 @@ if [ -z "$TARGET" ]; then
     echo "Targets:"
     echo "  shell       Configure shell integration"
     echo "  workspace   Create workspace directories"
+    echo "  packages    Install AxiomOS package profiles"
     exit 0
 fi
 
@@ -69,12 +70,35 @@ EOF
         success "Workspace directories created."
         ;;
 
+    packages)
+        PROFILE="$2"
+        shift 2 || true
+
+        if [ -z "$PROFILE" ]; then
+            error "Usage: axiom setup packages <profile> [modules/options]"
+            echo
+            echo "Available profiles:"
+            echo "  minimal"
+            echo "  math"
+            echo "  dev"
+            echo "  full"
+            echo
+            echo "Examples:"
+            echo "  axiom setup packages math --dry-run"
+            echo "  axiom setup packages dev java docker"
+            exit 1
+        fi
+
+        "$AXIOM_HOME/install.sh" "$PROFILE" "$@"
+        ;;
+
     *)
         error "Unknown setup target: $TARGET"
         echo
         echo "Available targets:"
         echo "  shell"
         echo "  workspace"
+        echo "  packages"
         exit 1
         ;;
 esac
