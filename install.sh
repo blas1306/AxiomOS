@@ -102,7 +102,7 @@ done
 APT_PACKAGES=($(printf "%s\n" "${APT_PACKAGES[@]}" | sort -u))
 PIP_PACKAGES=($(printf "%s\n" "${PIP_PACKAGES[@]}" | sort -u))
 
-echo -e "${BLUE}MathDistro Setup${NC}"
+echo -e "${BLUE}AxiomOS Setup${NC}"
 echo
 echo -e "Detected distro: ${GREEN}$DISTRO${NC}"
 echo -e "Selected profile: ${GREEN}$PROFILE${NC}"
