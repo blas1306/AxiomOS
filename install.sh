@@ -18,8 +18,17 @@ date >> "$LOG_FILE"
 source /etc/os-release
 DISTRO="$ID"
 
-if [[ "$DISTRO" != "ubuntu" && "$DISTRO" != "debian" && "$DISTRO" != "linuxmint" && "$DISTRO" != "pop" ]]; then
+DISTRO_FILE="install/distros/$DISTRO.conf"
+
+if [ ! -f "$DISTRO_FILE" ]; then
     echo -e "${RED}Unsupported distro: $DISTRO${NC}"
+    exit 1
+fi
+
+source "$DISTRO_FILE"
+
+if [ "$SUPPORTED" != "true" ]; then
+    echo -e "${RED}Distro not supported: $DISTRO${NC}"
     exit 1
 fi
 
