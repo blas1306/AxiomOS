@@ -56,8 +56,8 @@ if [ -z "$PROFILE" ]; then
     exit 1
 fi
 
-BASE_FILE="profiles/base.conf"
-PROFILE_FILE="profiles/$PROFILE.conf"
+BASE_FILE="install/profiles/base.conf"
+PROFILE_FILE="install/profiles/$PROFILE.conf"
 
 if [ ! -f "$BASE_FILE" ]; then
     echo -e "${RED}Error: base profile not found: $BASE_FILE${NC}"
@@ -83,7 +83,7 @@ PIP_PACKAGES=(
 )
 
 for module in "${MODULES[@]}"; do
-    MODULE_FILE="modules/$module.conf"
+    MODULE_FILE="install/modules/$module.conf"
 
     if [ ! -f "$MODULE_FILE" ]; then
         echo -e "${RED}Error: module not found: $MODULE_FILE${NC}"
