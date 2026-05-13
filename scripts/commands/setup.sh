@@ -1,0 +1,80 @@
+#!/bin/bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+AXIOM_HOME="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+source "$AXIOM_HOME/scripts/lib/ui.sh"
+
+TARGET="$1"
+
+if [ -z "$TARGET" ]; then
+    title "AxiomOS Setup"
+    echo "Usage:"
+    echo "  axiom setup <target>"
+    echo
+    echo "Targets:"
+    echo "  shell       Configure shell integration"
+    echo "  workspace   Create workspace directories"
+    exit 0
+fi
+
+case "$TARGET" in
+
+    shell)
+        title "AxiomOS Shell Setup"
+
+        mkdir -p "$HOME/.local/bin"
+        mkdir -p "$HOME/.local/share/bash-completion/completions"
+
+        cp "$AXIOM_HOME/axiom" "$HOME/.local/bin/axiom"
+        success "Installed axiom CLI to ~/.local/bin/axiom"
+
+        cp "$AXIOM_HOME/completions/axiom.bash" \
+           "$HOME/.local/share/bash-completion/completions/axiom"
+        success "Installed bash completion"
+
+        if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc"; then
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
+            success "Added ~/.local/bin to PATH in ~/.bashrc"
+        else
+            info "~/.local/bin already configured in PATH"
+        fi
+
+        if ! grep -q 'bash-completion/bash_completion' "$HOME/.bashrc"; then
+            cat >> "$HOME/.bashrc" <<'EOF'
+
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    source /usr/share/bash-completion/bash_completion
+fi
+EOF
+            success "Added bash-completion loading to ~/.bashrc"
+        else
+            info "bash-completion already configured"
+        fi
+
+        success "Shell setup completed. Restart terminal or run: source ~/.bashrc"
+        ;;
+
+    workspace)
+        title "AxiomOS Workspace Setup"
+
+        mkdir -p "$HOME/Workspace"
+        mkdir -p "$HOME/Workspace/Math"
+        mkdir -p "$HOME/Workspace/Programming"
+        mkdir -p "$HOME/Workspace/LaTeX"
+        mkdir -p "$HOME/Workspace/Research"
+        mkdir -p "$HOME/Workspace/Notes"
+        mkdir -p "$HOME/Workspace/Notebooks"
+
+        success "Workspace directories created."
+        ;;
+
+    *)
+        error "Unknown setup target: $TARGET"
+        echo
+        echo "Available targets:"
+        echo "  shell"
+        echo "  workspace"
+        exit 1
+        ;;
+esac
