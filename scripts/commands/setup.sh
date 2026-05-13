@@ -16,6 +16,7 @@ if [ -z "$TARGET" ]; then
     echo "  shell       Configure shell integration"
     echo "  workspace   Create workspace directories"
     echo "  packages    Install AxiomOS package profiles"
+    echo "  all         Complete AxiomOS setup"
     exit 0
 fi
 
@@ -70,9 +71,38 @@ EOF
         success "Workspace directories created."
         ;;
 
+    all)
+        title "AxiomOS Full Setup"
+
+        "$0" shell
+        "$0" workspace
+        "$0" packages minimal
+
+        success "AxiomOS setup completed."
+        ;;
+
     packages)
         PROFILE="$2"
         shift 2 || true
+
+        if [ "$PROFILE" = "--list" ]; then
+            title "AxiomOS Package Profiles"
+
+            section "Profiles"
+            printf "  %-10s %s\n" "minimal" "Base tools only"
+            printf "  %-10s %s\n" "math" "Mathematics and scientific computing"
+            printf "  %-10s %s\n" "dev" "Programming tools"
+            printf "  %-10s %s\n" "full" "Math + development tools"
+
+            section "Modules"
+            printf "  %-10s %s\n" "java" "JDK, Maven, Gradle"
+            printf "  %-10s %s\n" "docker" "Docker tooling"
+            printf "  %-10s %s\n" "vscode" "VS Code setup"
+            printf "  %-10s %s\n" "jetbrains" "JetBrains Toolbox setup"
+            printf "  %-10s %s\n" "julia" "Julia setup"
+
+            exit 0
+        fi
 
         if [ -z "$PROFILE" ]; then
             error "Usage: axiom setup packages <profile> [modules/options]"
